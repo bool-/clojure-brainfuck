@@ -13,7 +13,7 @@
   (loop [bkt-count 1]
     (when-not (== bkt-count 0)
       (reset! pointer (inc @pointer))
-      (condp = (nth commands @pointer)
+      (case (nth commands @pointer)
         \] (recur (dec bkt-count))
         \[ (recur (inc bkt-count))
         (recur bkt-count)))))
