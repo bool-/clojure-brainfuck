@@ -33,13 +33,14 @@
     0))
 
 
-(defn interpret [& commands]
+(defn interpret [commands cells-size]
   (let [cell (atom 0)
-        cells (atom [0 0 0 0 0 0 0 0 0 0 0 0 0])] ; need to make this dynamic
+        cells (atom (vec (repeat cells-size 0)))]
     (loop [pointer (atom 0)]
       (do-command cell cells pointer commands)
       (reset! pointer (inc @pointer))
-      (if-not (= @pointer (count commands)) (recur pointer)))))
+      (if-not (= @pointer (count commands)) (recur pointer)))
+    (println @cells)))
 
-(apply interpret "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.")
+(interpret "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>." 100)
 
